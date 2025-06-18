@@ -1,0 +1,305 @@
+/* src/index.css */
+/* -----------------------------------
+   Definisikan warna‐warna tema dan font
+------------------------------------- */
+:root {
+    --color-dark-bg: #1f1f1f;
+    --color-card-bg: #2c2c2e;
+    --color-primary-orange: #ff8c00;
+    --color-white: #ffffff;
+    --color-gray-700: #3a3a3c;
+    --color-gray-600: #48484a;
+    --color-gray-400: #a1a1a1;
+    --font-sans: 'Inter', sans-serif;
+  }
+  
+  /* Reset minimal */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body, #root {
+    height: 100%;
+  }
+  
+  body {
+    background-color: var(--color-dark-bg);
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* -----------------------------------
+     Style untuk Navbar (bottom)
+  ------------------------------------- */
+  .navbar {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+  
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--color-white);
+  }
+  .nav-link.active {
+    color: var(--color-primary-orange);
+  }
+  .nav-link .material-icons {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  /* -----------------------------------
+     Style untuk Halaman MePage
+  ------------------------------------- */
+  .me-page {
+    padding: 1rem;
+  }
+  
+  .me-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .me-header-left {
+    display: flex;
+    align-items: center;
+  }
+  .avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: var(--color-gray-600);
+    margin-right: 0.75rem;
+  }
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .user-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .user-subtitle {
+    font-size: 0.875rem;
+    color: var(--color-gray-400);
+  }
+  
+  .status-chip {
+    background-color: #22c55e; /* hijau cerah */
+    color: var(--color-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .streak {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .streak .material-icons {
+    color: var(--color-primary-orange);
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+  }
+  .streak-text {
+    font-size: 0.875rem;
+  }
+  
+  .meal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .meal-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-card-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+    transition: background-color 0.2s;
+  }
+  .meal-button:hover {
+    background-color: var(--color-gray-700);
+  }
+  .meal-left {
+    display: flex;
+    align-items: center;
+  }
+  .meal-icon {
+    font-size: 1.5rem;
+    color: var(--color-primary-orange);
+    margin-right: 0.75rem;
+  }
+  .meal-label {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .meal-add {
+    font-size: 1.25rem;
+    color: var(--color-white);
+  }
+  
+  .dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .dashboard-card {
+    background-color: var(--color-card-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .dashboard-card h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .dashboard-placeholder {
+    flex: 1;
+    background-color: var(--color-gray-700);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gray-400);
+    font-size: 0.875rem;
+  }
+  
+  /* -----------------------------------
+     Style untuk Halaman ChatPage
+  ------------------------------------- */
+  .chat-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .chat-header {
+    background-color: var(--color-card-bg);
+    padding: 1rem;
+  }
+  .chat-header h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  
+  .chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: var(--color-dark-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .message {
+    max-width: 75%;
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    position: relative;
+    word-wrap: break-word;
+  }
+  .message.user {
+    margin-left: auto;
+    background-color: var(--color-primary-orange);
+    border-bottom-right-radius: 0.25rem;
+  }
+  .message.bot {
+    margin-right: auto;
+    background-color: var(--color-gray-700);
+    border-bottom-left-radius: 0.25rem;
+  }
+  .message.system {
+    margin: 0 auto;
+    background-color: var(--color-gray-600);
+    color: var(--color-gray-400);
+    font-style: italic;
+    font-size: 0.875rem;
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .chat-input-container {
+    background-color: var(--color-card-bg);
+    padding: 0.5rem 1rem;
+  }
+  .chat-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .chat-textarea {
+    flex: 1;
+    resize: none;
+    background-color: var(--color-gray-600);
+    color: var(--color-white);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+  }
+  .chat-send-button {
+    background-color: var(--color-primary-orange);
+    border-radius: 1rem;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chat-send-button .material-icons {
+    color: var(--color-white);
+    font-size: 1.25rem;
+  }
+  
+  /* -----------------------------------
+     Responsive (opsional)
+  ------------------------------------- */
+  @media (max-width: 480px) {
+    .dashboard {
+      grid-template-columns: 1fr;
+    }
+  }
+  
