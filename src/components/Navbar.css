@@ -1,0 +1,68 @@
+/* src/components/Navbar.css */
+.navbar {
+  position: fixed; /* Keep it at the bottom */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px; /* Slightly taller for better touch targets */
+  background-color: rgba(0, 0, 0, 0.5); /* More transparent dark background */
+  backdrop-filter: blur(15px); /* Stronger blur for glass effect */
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle top border */
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  z-index: 1000; /* Ensure it's above other content */
+  padding: 0 1rem; /* Add some horizontal padding */
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column; /* Stack icon and text */
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--color-gray-400); /* Lighter gray for inactive links */
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.8rem; /* Smaller font size for text */
+  font-weight: 500;
+  padding: 0.5rem 0.75rem; /* Padding for clickable area */
+  border-radius: 10px; /* Slightly rounded corners */
+  transition: all 0.3s ease; /* Smooth transitions */
+  cursor: pointer;
+  background: transparent; /* Ensure button background is transparent */
+}
+
+.nav-link:hover {
+  color: var(--color-white); /* White on hover */
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle background on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.nav-link.active {
+  color: var(--color-primary-orange); /* Orange for active link */
+  background-color: rgba(255, 107, 53, 0.1); /* Subtle orange background for active */
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2); /* Subtle orange shadow */
+}
+
+.nav-link svg {
+  /* Target Lucide icons */
+  font-size: 1.5rem; /* Larger icon size */
+  margin-bottom: 0.2rem; /* Space between icon and text */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .navbar {
+    height: 65px;
+    padding: 0 0.5rem;
+  }
+  .nav-link {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+  .nav-link svg {
+    font-size: 1.3rem;
+  }
+}
