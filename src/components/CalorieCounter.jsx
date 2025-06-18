@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -67,12 +68,16 @@ export default function CalorieCounter() {
         }
 
         // Fetch today's total calories
+        const todayDate = new Date()
+        const startOfDay = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0)
+        const nextDay = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate() + 1, 0, 0, 0)
+
         const { data: calorieData, error: calorieError } = await supabase
           .from("calorie_logs")
           .select("totalcalories")
           .eq("user_id", user.id)
-          .gte("created_at", `${today}T00:00:00`)
-          .lt("created_at", `${today}T23:59:59`)
+          .gte("created_at", startOfDay.toISOString())
+          .lt("created_at", nextDay.toISOString())
 
         if (!calorieError && calorieData) {
           const total = calorieData.reduce((sum, log) => sum + (log.totalcalories || 0), 0)

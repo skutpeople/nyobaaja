@@ -1,201 +1,3 @@
-// "use client"
-
-// import { useState, useEffect, useRef } from "react"
-// import { useNavigate } from "react-router-dom"
-// import ChatMessage from "../components/ChatMessage"
-// import ChatInput from "../components/ChatInput"
-// import { supabase } from "../lib/supabaseClient"
-// import { analyzeFoodByText } from "../lib/deepseekClient"
-// import { useAuth } from "../lib/AuthContext"
-// import "./ChatPage.css"
-
-// export default function ChatPage() {
-//   const navigate = useNavigate()
-//   const { user } = useAuth()
-
-//   const [messages, setMessages] = useState([])
-//   const [isTyping, setIsTyping] = useState(false)
-//   const messagesEndRef = useRef(null)
-
-//   // Auto‐scroll ke pesan terakhir
-//   useEffect(() => {
-//     if (messagesEndRef.current) {
-//       messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-//     }
-//   }, [messages])
-
-//   const handleSend = async (text) => {
-//     // Tampilkan dulu pesan user di UI
-//     setMessages((prev) => [...prev, { text, isUser: true }])
-//     setIsTyping(true)
-
-//     let deepseekResult = null
-//     try {
-//       deepseekResult = await analyzeFoodByText(text)
-//       console.log("> Hasil deepseekResult di ChatPage:", deepseekResult)
-//       // Diharapkan deepseekResult = { items: [...], totalCalories: number }
-//     } catch (err) {
-//       console.error("Error DeepSeek di ChatPage:", err)
-//       setIsTyping(false)
-//       setMessages((prev) => [
-//         ...prev,
-//         { text: "Maaf, terjadi kesalahan memanggil DeepSeek. Coba lagi nanti.", isUser: false },
-//       ])
-//       return
-//     }
-
-//     // Proses response dari DeepSeek
-//     const items = Array.isArray(deepseekResult.items) ? deepseekResult.items : []
-
-//     // Simpan tiap item ke calorie_logs
-//     let sumCalsFromItems = 0
-//     if (items.length > 0) {
-//       for (const it of items) {
-//         const name = it.name || text
-//         const cals = it.calories || 0
-//         const qty = it.quantity || 1
-//         const totalCalories = it.totalCalories || cals * qty
-//         sumCalsFromItems += totalCalories
-
-//         await supabase.from("calorie_logs").insert({
-//           user_id: user.id,
-//           food_name: name,
-//           calories: cals,
-//           quantity: qty,
-//           totalcalories: totalCalories,
-//         })
-//       }
-//     } else {
-//       // Jika items kosong, simpan satu row saja dengan totalCalories
-//       sumCalsFromItems = items.totalCalories
-//       await supabase.from("calorie_logs").insert({
-//         user_id: user.id,
-//         food_name: text,
-//         calories: items.calories || 0,
-//         quantity: items.quantity || 1,
-//         totalcalories: items.totalCalories || (items.calories * items.quantity)
-//       })
-//     }
-
-//     // Tampilkan balasan bot di UI
-//     setIsTyping(false)
-//     const botReply = `Great! I've logged ${sumCalsFromItems} calories for "${text}". Keep tracking your intake!`
-//     setMessages((prev) => [...prev, { text: botReply, isUser: false }])
-//   }
-
-//   return (
-//     <div style={styles.pageContainer}>
-//       <div style={styles.header}>
-//         <h2 style={styles.heading}>Food Logging Chat</h2>
-//         <button style={styles.backBtn} onClick={() => navigate("/me")}>
-//           Back to Dashboard
-//         </button>
-//       </div>
-
-//       <div style={styles.chatContainer}>
-//         {messages.length === 0 && (
-//           <div style={styles.welcomeMessage}>
-//             <h3>🍽️ Welcome to Food Logging!</h3>
-//             <p>Describe any food you've eaten and I'll help you track the calories.</p>
-//             <div style={styles.examples}>
-//               <p>
-//                 <strong>Examples:</strong>
-//               </p>
-//               <ul>
-//                 <li>"I had a chicken sandwich with fries"</li>
-//                 <li>"2 slices of pizza and a coke"</li>
-//                 <li>"Greek salad with grilled chicken"</li>
-//               </ul>
-//             </div>
-//           </div>
-//         )}
-
-//         {messages.map((msg, idx) => (
-//           <ChatMessage key={idx} text={msg.text} isUser={msg.isUser} />
-//         ))}
-//         {isTyping && <div style={styles.typingIndicator}>AI is analyzing your food...</div>}
-//         <div ref={messagesEndRef} />
-//       </div>
-
-//       <div style={styles.inputContainer}>
-//         <ChatInput onSend={handleSend} />
-//       </div>
-//     </div>
-//   )
-// }
-
-// const styles = {
-//   pageContainer: {
-//     display: "flex",
-//     flexDirection: "column",
-//     height: "100vh",
-//     padding: "1rem",
-//     boxSizing: "border-box",
-//     maxWidth: "800px",
-//     margin: "0 auto",
-//   },
-//   header: {
-//     display: "flex",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     marginBottom: "1rem",
-//     paddingBottom: "1rem",
-//     borderBottom: "1px solid var(--color-gray-700)",
-//   },
-//   heading: {
-//     color: "var(--color-white)",
-//     margin: 0,
-//     fontFamily: "var(--font-sans)",
-//     fontSize: "1.5rem",
-//   },
-//   backBtn: {
-//     backgroundColor: "var(--color-primary-orange)",
-//     border: "none",
-//     borderRadius: "6px",
-//     padding: "0.5rem 1rem",
-//     color: "var(--color-white)",
-//     cursor: "pointer",
-//     fontSize: "0.875rem",
-//   },
-//   chatContainer: {
-//     flex: 1,
-//     overflowY: "auto",
-//     display: "flex",
-//     flexDirection: "column",
-//     gap: "0.75rem",
-//     marginBottom: "1rem",
-//     padding: "0 0.5rem",
-//   },
-//   welcomeMessage: {
-//     textAlign: "center",
-//     padding: "2rem",
-//     backgroundColor: "var(--color-card-bg)",
-//     borderRadius: "12px",
-//     color: "var(--color-white)",
-//     margin: "2rem 0",
-//   },
-//   examples: {
-//     textAlign: "left",
-//     marginTop: "1.5rem",
-//     padding: "1rem",
-//     backgroundColor: "var(--color-gray-800)",
-//     borderRadius: "8px",
-//   },
-//   typingIndicator: {
-//     fontStyle: "italic",
-//     color: "var(--color-gray-400)",
-//     fontSize: "0.875rem",
-//     textAlign: "center",
-//     padding: "0.5rem",
-//   },
-//   inputContainer: {
-//     backgroundColor: "var(--color-card-bg)",
-//     padding: "1rem",
-//     borderRadius: "12px",
-//     border: "1px solid var(--color-gray-700)",
-//   },
-// }
-
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -208,6 +10,7 @@ import { IntentPredictor } from "../lib/intentPredictor"
 import { ChatHistoryService } from "../lib/chatHistoryService"
 import { useAuth } from "../lib/AuthContext"
 import LoadingSpinner from "../components/LoadingSpinner"
+import TexturedLayout from "../components/TexturedLayout"
 import "./ChatPage.css"
 
 export default function ChatPage() {
@@ -383,83 +186,85 @@ export default function ChatPage() {
 
   if (isLoadingHistory) {
     return (
-      <div style={styles.pageContainer}>
+      <TexturedLayout>
         <div style={styles.loadingContainer}>
           <LoadingSpinner size="large" text="Loading chat history..." />
         </div>
-      </div>
+      </TexturedLayout>
     )
   }
 
   return (
-    <div style={styles.pageContainer}>
-      <div style={styles.header}>
-        <h2 style={styles.heading}>Smart Health Chat</h2>
-        <div style={styles.headerActions}>
-          <button style={styles.clearButton} onClick={handleClearHistory}>
-            🗑️ Clear
-          </button>
-          <button style={styles.backBtn} onClick={() => navigate("/me")}>
-            Back to Dashboard
-          </button>
+    <TexturedLayout>
+      <div style={styles.pageContainer}>
+        <div style={styles.header}>
+          <h2 style={styles.heading}>Smart Health Chat</h2>
+          <div style={styles.headerActions}>
+            <button style={styles.clearButton} onClick={handleClearHistory}>
+              🗑️ Clear
+            </button>
+            <button style={styles.backBtn} onClick={() => navigate("/me")}>
+              Back to Dashboard
+            </button>
+          </div>
+        </div>
+
+        <div style={styles.chatContainer}>
+          {messages.length === 0 && (
+            <div style={styles.welcomeMessage}>
+              <h3 style={styles.welcomeTitle}>🤖 Smart Health Assistant</h3>
+              <p style={styles.welcomeSubtitle}>Ask health questions or log your food intake!</p>
+              <div style={styles.examples}>
+                <div style={styles.exampleSection}>
+                  <p style={styles.exampleTitle}>
+                    <strong>🍎 Ask Questions:</strong>
+                  </p>
+                  <ul style={styles.exampleList}>
+                    <li>"Berapa kalori nasi goreng?"</li>
+                    <li>"Makanan apa yang sehat untuk diet?"</li>
+                    <li>"Olahraga apa yang bagus untuk menurunkan berat badan?"</li>
+                  </ul>
+                </div>
+                <div style={styles.exampleSection}>
+                  <p style={styles.exampleTitle}>
+                    <strong>📝 Log Food:</strong>
+                  </p>
+                  <ul style={styles.exampleList}>
+                    <li>"Aku abis makan burger dan kentang goreng"</li>
+                    <li>"Tadi makan nasi padang 1 porsi"</li>
+                    <li>"Aku minum kopi susu 2 gelas"</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {messages.map((msg, idx) => (
+            <div key={idx} style={styles.messageWrapper}>
+              <ChatMessage text={msg.text} isUser={msg.isUser} />
+              <div style={styles.messageInfo}>
+                <span style={styles.timestamp}>
+                  {new Date(msg.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+                <span style={styles.messageType}>
+                  {msg.messageType === "food_logging" ? "🍽️ Food Log" : "💬 Question"}
+                </span>
+              </div>
+            </div>
+          ))}
+
+          {isTyping && <div style={styles.typingIndicator}>🤖 AI is thinking...</div>}
+          <div ref={messagesEndRef} />
+        </div>
+
+        <div style={styles.inputContainer}>
+          <ChatInput onSend={handleSend} />
         </div>
       </div>
-
-      <div style={styles.chatContainer}>
-        {messages.length === 0 && (
-          <div style={styles.welcomeMessage}>
-            <h3>🤖 Smart Health Assistant</h3>
-            <p>Ask health questions or log your food intake!</p>
-            <div style={styles.examples}>
-              <div style={styles.exampleSection}>
-                <p>
-                  <strong>🍎 Ask Questions:</strong>
-                </p>
-                <ul>
-                  <li>"Berapa kalori nasi goreng?"</li>
-                  <li>"Makanan apa yang sehat untuk diet?"</li>
-                  <li>"Olahraga apa yang bagus untuk menurunkan berat badan?"</li>
-                </ul>
-              </div>
-              <div style={styles.exampleSection}>
-                <p>
-                  <strong>📝 Log Food:</strong>
-                </p>
-                <ul>
-                  <li>"Aku abis makan burger dan kentang goreng"</li>
-                  <li>"Tadi makan nasi padang 1 porsi"</li>
-                  <li>"Aku minum kopi susu 2 gelas"</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {messages.map((msg, idx) => (
-          <div key={idx} style={styles.messageWrapper}>
-            <ChatMessage text={msg.text} isUser={msg.isUser} />
-            <div style={styles.messageInfo}>
-              <span style={styles.timestamp}>
-                {new Date(msg.timestamp).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
-              <span style={styles.messageType}>
-                {msg.messageType === "food_logging" ? "🍽️ Food Log" : "💬 Question"}
-              </span>
-            </div>
-          </div>
-        ))}
-
-        {isTyping && <div style={styles.typingIndicator}>🤖 AI is thinking...</div>}
-        <div ref={messagesEndRef} />
-      </div>
-
-      <div style={styles.inputContainer}>
-        <ChatInput onSend={handleSend} />
-      </div>
-    </div>
+    </TexturedLayout>
   )
 }
 
@@ -467,116 +272,158 @@ const styles = {
   pageContainer: {
     display: "flex",
     flexDirection: "column",
-    height: "100vh",
-    padding: "1rem",
-    boxSizing: "border-box",
-    maxWidth: "800px",
-    margin: "0 auto",
+    height: "calc(100vh - 4rem)", // Account for TexturedLayout padding
+    color: "var(--color-white, #ffffff)",
+    fontFamily: "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)",
   },
   loadingContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%",
+    height: "60vh",
   },
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "1rem",
+    marginBottom: "1.5rem",
     paddingBottom: "1rem",
-    borderBottom: "1px solid var(--color-gray-700)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
     flexWrap: "wrap",
-    gap: "0.5rem",
+    gap: "1rem",
   },
   heading: {
-    color: "var(--color-white)",
     margin: 0,
-    fontFamily: "var(--font-sans)",
-    fontSize: "1.5rem",
+    fontSize: "1.75rem",
+    fontWeight: "700",
+    background: "linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
   },
   headerActions: {
     display: "flex",
-    gap: "0.5rem",
+    gap: "0.75rem",
   },
   clearButton: {
-    backgroundColor: "var(--color-gray-600)",
-    border: "none",
-    borderRadius: "6px",
-    padding: "0.5rem 1rem",
-    color: "var(--color-white)",
+    padding: "0.75rem 1.25rem",
+    borderRadius: "12px",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    color: "#ffffff",
     cursor: "pointer",
-    fontSize: "0.875rem",
+    fontSize: "0.9rem",
+    transition: "all 0.3s ease",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
   },
   backBtn: {
-    backgroundColor: "var(--color-primary-orange)",
+    padding: "0.75rem 1.25rem",
+    borderRadius: "12px",
     border: "none",
-    borderRadius: "6px",
-    padding: "0.5rem 1rem",
-    color: "var(--color-white)",
+    background: "linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)",
+    color: "#ffffff",
     cursor: "pointer",
-    fontSize: "0.875rem",
+    fontSize: "0.9rem",
+    fontWeight: "600",
+    transition: "all 0.3s ease",
+    boxShadow: "0 4px 12px rgba(255, 107, 53, 0.3)",
   },
   chatContainer: {
     flex: 1,
     overflowY: "auto",
     display: "flex",
     flexDirection: "column",
-    gap: "0.75rem",
-    marginBottom: "1rem",
+    gap: "1rem",
+    marginBottom: "1.5rem",
     padding: "0 0.5rem",
+    scrollbarWidth: "thin",
+    scrollbarColor: "rgba(255, 255, 255, 0.3) transparent",
   },
   messageWrapper: {
     display: "flex",
     flexDirection: "column",
-    gap: "0.25rem",
+    gap: "0.5rem",
   },
   messageInfo: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     fontSize: "0.75rem",
-    color: "var(--color-gray-400)",
+    color: "rgba(255, 255, 255, 0.5)",
     marginBottom: "0.5rem",
+    paddingLeft: "0.5rem",
   },
   timestamp: {},
   messageType: {
-    backgroundColor: "var(--color-gray-700)",
-    padding: "0.125rem 0.375rem",
-    borderRadius: "4px",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    padding: "0.25rem 0.5rem",
+    borderRadius: "8px",
     fontSize: "0.625rem",
+    backdropFilter: "blur(5px)",
   },
   welcomeMessage: {
     textAlign: "center",
-    padding: "2rem",
-    backgroundColor: "var(--color-card-bg)",
-    borderRadius: "12px",
-    color: "var(--color-white)",
+    padding: "2.5rem",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: "16px",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+    backdropFilter: "blur(10px)",
     margin: "2rem 0",
+    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
+  },
+  welcomeTitle: {
+    margin: "0 0 1rem 0",
+    fontSize: "1.5rem",
+    fontWeight: "600",
+    background: "linear-gradient(135deg, #ffffff 0%, #ff6b35 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+  },
+  welcomeSubtitle: {
+    margin: "0 0 2rem 0",
+    fontSize: "1.1rem",
+    color: "rgba(255, 255, 255, 0.8)",
   },
   examples: {
     textAlign: "left",
-    marginTop: "1.5rem",
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "1rem",
+    gridTemplateColumns: "1fr",
+    gap: "1.5rem",
   },
   exampleSection: {
-    padding: "1rem",
-    backgroundColor: "var(--color-gray-800)",
-    borderRadius: "8px",
+    padding: "1.5rem",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    borderRadius: "12px",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+  },
+  exampleTitle: {
+    margin: "0 0 1rem 0",
+    color: "#ffffff",
+    fontSize: "1rem",
+  },
+  exampleList: {
+    margin: 0,
+    paddingLeft: "1.5rem",
+    color: "rgba(255, 255, 255, 0.8)",
   },
   typingIndicator: {
     fontStyle: "italic",
-    color: "var(--color-gray-400)",
-    fontSize: "0.875rem",
+    color: "rgba(255, 255, 255, 0.6)",
+    fontSize: "0.9rem",
     textAlign: "center",
-    padding: "0.5rem",
+    padding: "1rem",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: "12px",
+    backdropFilter: "blur(5px)",
   },
   inputContainer: {
-    backgroundColor: "var(--color-card-bg)",
-    padding: "1rem",
-    borderRadius: "12px",
-    border: "1px solid var(--color-gray-700)",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    padding: "1.5rem",
+    borderRadius: "16px",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
   },
 }

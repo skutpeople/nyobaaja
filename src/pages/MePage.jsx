@@ -1,308 +1,4 @@
 
-
-// // "use client"
-
-// // import { useState } from "react"
-// // import { useNavigate } from "react-router-dom"
-// // import { useAuth } from "../lib/AuthContext"
-// // import CalorieCounter from "../components/CalorieCounter"
-// // import UserProfileForm from "../components/UserProfileForm"
-// // import RecentMeals from "../components/RecentMeals"
-// // import LoadingButton from "../components/LoadingButton"
-// // import "./MePage.css"
-// // import CalorieCalendar from "../components/CalorieCalendar"
-
-// // export default function MePage() {
-// //   const { user, signOut } = useAuth()
-// //   const navigate = useNavigate()
-// //   const [showProfileForm, setShowProfileForm] = useState(false)
-// //   const [refreshKey, setRefreshKey] = useState(0)
-
-// //   const handleSignOut = async () => {
-// //     try {
-// //       await signOut()
-// //       // Navigation will be handled by the auth state change in routes
-// //     } catch (error) {
-// //       console.error("Error signing out:", error)
-// //     }
-// //   }
-
-// //   const handleAddFood = () => {
-// //     navigate("/chat")
-// //   }
-
-// //   const handleProfileUpdate = () => {
-// //     // Refresh the calorie counter when profile is updated
-// //     setRefreshKey((prev) => prev + 1)
-// //     setShowProfileForm(false)
-// //   }
-
-// //   const userName = user?.username || user?.email?.split("@")[0] || "User"
-
-// //   const headerActions = (
-// //     <div style={styles.headerActions}>
-// //       <button onClick={() => setShowProfileForm(!showProfileForm)} style={styles.profileButton}>
-// //         ⚙️ Profile
-// //       </button>
-// //     </div>
-// //   )
-
-// //   return (
-// //     <div style={styles.container}>
-// //       <div style={styles.header}>
-// //         <div style={styles.welcomeSection}>
-// //           <h1 style={styles.heading}>Welcome back, {userName}!</h1>
-// //           <p style={styles.subtitle}>Track your daily calorie intake</p>
-// //         </div>
-// //         {headerActions}
-// //       </div>
-
-// //       {/* Profile Form (collapsible) */}
-// //       {showProfileForm && <UserProfileForm onProfileUpdate={handleProfileUpdate} />}
-
-// //       {/* Calorie Calendar */}
-// //       <CalorieCalendar />
-
-// //       {/* Calorie Counter */}
-// //       <div key={refreshKey}>
-// //         <CalorieCounter />
-// //       </div>
-
-// //       {/* Add Food Button */}
-// //       <div style={styles.addFoodSection}>
-// //         <LoadingButton onClick={handleAddFood} style={styles.addFoodButton}>
-// //           <span style={styles.addIcon}>🍽️</span>
-// //           Add Food
-// //         </LoadingButton>
-// //       </div>
-
-// //       {/* Recent Meals */}
-// //       <RecentMeals />
-// //     </div>
-// //   )
-// // }
-
-// // const styles = {
-// //   container: {
-// //     padding: "1.5rem",
-// //     color: "var(--color-white)",
-// //     fontFamily: "var(--font-sans)",
-// //     maxWidth: "800px",
-// //     margin: "0 auto",
-// //   },
-// //   header: {
-// //     display: "flex",
-// //     justifyContent: "space-between",
-// //     alignItems: "flex-start",
-// //     marginBottom: "2rem",
-// //     flexWrap: "wrap",
-// //     gap: "1rem",
-// //   },
-// //   welcomeSection: {
-// //     flex: 1,
-// //   },
-// //   heading: {
-// //     margin: "0 0 0.5rem 0",
-// //     fontSize: "1.75rem",
-// //     fontWeight: "700",
-// //   },
-// //   subtitle: {
-// //     margin: 0,
-// //     fontSize: "1rem",
-// //     color: "var(--color-gray-400)",
-// //   },
-// //   headerActions: {
-// //     display: "flex",
-// //     gap: "0.75rem",
-// //     alignItems: "center",
-// //   },
-// //   profileButton: {
-// //     padding: "0.5rem 1rem",
-// //     borderRadius: "6px",
-// //     border: "1px solid var(--color-gray-600)",
-// //     backgroundColor: "var(--color-gray-700)",
-// //     color: "var(--color-white)",
-// //     cursor: "pointer",
-// //     fontSize: "0.875rem",
-// //     display: "flex",
-// //     alignItems: "center",
-// //     gap: "0.5rem",
-// //   },
-// //   signOutButton: {
-// //     padding: "0.5rem 1rem",
-// //     borderRadius: "6px",
-// //     border: "none",
-// //     backgroundColor: "var(--color-gray-600)",
-// //     color: "var(--color-white)",
-// //     cursor: "pointer",
-// //     fontSize: "0.875rem",
-// //   },
-// //   addFoodSection: {
-// //     display: "flex",
-// //     justifyContent: "center",
-// //     marginBottom: "2rem",
-// //   },
-// //   addFoodButton: {
-// //     padding: "1rem 2rem",
-// //     fontSize: "1.125rem",
-// //     fontWeight: "600",
-// //     borderRadius: "12px",
-// //     backgroundColor: "var(--color-primary-orange)",
-// //     minWidth: "200px",
-// //   },
-// //   addIcon: {
-// //     fontSize: "1.25rem",
-// //   },
-// // }
-
-// "use client"
-
-// import { useState } from "react"
-// import { useNavigate } from "react-router-dom"
-// import { useAuth } from "../lib/AuthContext"
-// import CalorieCounter from "../components/CalorieCounter"
-// import UserProfileForm from "../components/UserProfileForm"
-// import RecentMeals from "../components/RecentMeals"
-// import LoadingButton from "../components/LoadingButton"
-// import CalorieCalendar from "../components/CalorieCalendar"
-// import "./MePage.css"
-
-// export default function MePage() {
-//   const { user, signOut } = useAuth()
-//   const navigate = useNavigate()
-//   const [showProfileForm, setShowProfileForm] = useState(false)
-//   const [refreshKey, setRefreshKey] = useState(0)
-
-//   const handleSignOut = async () => {
-//     try {
-//       await signOut()
-//       // Navigation will be handled by the auth state change in routes
-//     } catch (error) {
-//       console.error("Error signing out:", error)
-//     }
-//   }
-
-//   const handleAddFood = () => {
-//     navigate("/chat")
-//   }
-
-//   const handleProfileUpdate = () => {
-//     // Refresh the calorie counter and calendar when profile is updated
-//     setRefreshKey((prev) => prev + 1)
-//     setShowProfileForm(false)
-//   }
-
-//   const userName = user?.username || user?.email?.split("@")[0] || "User"
-
-//   const headerActions = (
-//     <div style={styles.headerActions}>
-//       <button onClick={() => setShowProfileForm(!showProfileForm)} style={styles.profileButton}>
-//         ⚙️ Profile
-//       </button>
-//     </div>
-//   )
-
-//   return (
-//     <div style={styles.container}>
-//       <div style={styles.header}>
-//         <div style={styles.welcomeSection}>
-//           <h1 style={styles.heading}>Welcome back, {userName}!</h1>
-//           <p style={styles.subtitle}>Track your daily calorie intake</p>
-//         </div>
-//         {headerActions}
-//       </div>
-
-//       {/* Profile Form (collapsible) */}
-//       {showProfileForm && <UserProfileForm onProfileUpdate={handleProfileUpdate} />}
-
-//       {/* Calorie Calendar - Shows historical progress */}
-//       <div key={`calendar-${refreshKey}`}>
-//         <CalorieCalendar />
-//       </div>
-
-//       {/* Calorie Counter - Shows today's progress */}
-//       <div key={`counter-${refreshKey}`}>
-//         <CalorieCounter />
-//       </div>
-
-//       {/* Add Food Button */}
-//       <div style={styles.addFoodSection}>
-//         <LoadingButton onClick={handleAddFood} style={styles.addFoodButton}>
-//           <span style={styles.addIcon}>🍽️</span>
-//           Add Food
-//         </LoadingButton>
-//       </div>
-
-//       {/* Recent Meals */}
-//       <RecentMeals />
-//     </div>
-//   )
-// }
-
-// const styles = {
-//   container: {
-//     padding: "1.5rem",
-//     color: "var(--color-white)",
-//     fontFamily: "var(--font-sans)",
-//     maxWidth: "800px",
-//     margin: "0 auto",
-//   },
-//   header: {
-//     display: "flex",
-//     justifyContent: "space-between",
-//     alignItems: "flex-start",
-//     marginBottom: "2rem",
-//     flexWrap: "wrap",
-//     gap: "1rem",
-//   },
-//   welcomeSection: {
-//     flex: 1,
-//   },
-//   heading: {
-//     margin: "0 0 0.5rem 0",
-//     fontSize: "1.75rem",
-//     fontWeight: "700",
-//   },
-//   subtitle: {
-//     margin: 0,
-//     fontSize: "1rem",
-//     color: "var(--color-gray-400)",
-//   },
-//   headerActions: {
-//     display: "flex",
-//     gap: "0.75rem",
-//     alignItems: "center",
-//   },
-//   profileButton: {
-//     padding: "0.5rem 1rem",
-//     borderRadius: "6px",
-//     border: "1px solid var(--color-gray-600)",
-//     backgroundColor: "var(--color-gray-700)",
-//     color: "var(--color-white)",
-//     cursor: "pointer",
-//     fontSize: "0.875rem",
-//     display: "flex",
-//     alignItems: "center",
-//     gap: "0.5rem",
-//   },
-//   addFoodSection: {
-//     display: "flex",
-//     justifyContent: "center",
-//     marginBottom: "2rem",
-//   },
-//   addFoodButton: {
-//     padding: "1rem 2rem",
-//     fontSize: "1.125rem",
-//     fontWeight: "600",
-//     borderRadius: "12px",
-//     backgroundColor: "var(--color-primary-orange)",
-//     minWidth: "200px",
-//   },
-//   addIcon: {
-//     fontSize: "1.25rem",
-//   },
-// }
-
 "use client"
 
 import { useState } from "react"
@@ -312,19 +8,18 @@ import CalorieCounter from "../components/CalorieCounter"
 import UserProfileForm from "../components/UserProfileForm"
 import LoadingButton from "../components/LoadingButton"
 import CalorieCalendar from "../components/CalorieCalendar"
-import "./MePage.css"
 import MealsCatalog from "../components/MealsCatalog"
+import TexturedLayout from "../components/TexturedLayout"
+import "./MePage.css"
 
 export default function MePage() {
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const [showProfileForm, setShowProfileForm] = useState(false)
-  const [refreshKey, setRefreshKey] = useState(0)
 
   const handleSignOut = async () => {
     try {
       await signOut()
-      // Navigation will be handled by the auth state change in routes
     } catch (error) {
       console.error("Error signing out:", error)
     }
@@ -335,67 +30,71 @@ export default function MePage() {
   }
 
   const handleProfileUpdate = () => {
-    // Refresh the calorie counter and calendar when profile is updated
-    setRefreshKey((prev) => prev + 1)
     setShowProfileForm(false)
+    setTimeout(() => {
+        window.location.reload()
+      }, 100)
   }
 
   const userName = user?.username || user?.email?.split("@")[0] || "User"
 
-  const headerActions = (
-    <div style={styles.headerActions}>
-      <button onClick={() => setShowProfileForm(!showProfileForm)} style={styles.profileButton}>
-        ⚙️ Profile
-      </button>
-    </div>
-  )
-
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <div style={styles.welcomeSection}>
-          <h1 style={styles.heading}>Welcome back, {userName}!</h1>
-          <p style={styles.subtitle}>Track your daily calorie intake</p>
+    <TexturedLayout>
+      <div style={styles.container}>
+        {/* Header Section */}
+        <div style={styles.header}>
+          <div style={styles.welcomeSection}>
+            <h1 style={styles.heading}>Welcome back, {userName}!</h1>
+            <p style={styles.subtitle}>Track your daily calorie intake</p>
+          </div>
+          <div style={styles.headerActions}>
+            <button onClick={() => setShowProfileForm(!showProfileForm)} style={styles.profileButton}>
+              ⚙️ Profile
+            </button>
+          </div>
         </div>
-        {headerActions}
-      </div>
 
-      {/* Profile Form (collapsible) */}
-      {showProfileForm && <UserProfileForm onProfileUpdate={handleProfileUpdate} />}
+        {/* Profile Form */}
+        {showProfileForm && (
+          <div style={styles.profileFormContainer}>
+            <UserProfileForm onProfileUpdate={handleProfileUpdate} />
+          </div>
+        )}
 
-      {/* Calorie Calendar - Shows historical progress */}
-      <div key={`calendar-${refreshKey}`}>
-        <CalorieCalendar />
-      </div>
+        {/* Main Content Grid */}
+        <div style={styles.contentGrid}>
+          {/* Calorie Calendar */}
+          <div style={styles.calendarSection}>
+            <CalorieCalendar />
+          </div>
 
-      {/* Calorie Counter - Shows today's progress */}
-      <div key={`counter-${refreshKey}`}>
-        <CalorieCounter />
-      </div>
+          {/* Calorie Counter */}
+          <div style={styles.counterSection}>
+            <CalorieCounter />
+          </div>
+        </div>
 
-      {/* Add Food Button */}
-      <div style={styles.addFoodSection}>
-        <LoadingButton onClick={handleAddFood} style={styles.addFoodButton}>
-          <span style={styles.addIcon}>🍽️</span>
-          Add Food
-        </LoadingButton>
-      </div>
+        {/* Add Food Button */}
+        <div style={styles.addFoodSection}>
+          <LoadingButton onClick={handleAddFood} style={styles.addFoodButton}>
+            <span style={styles.addIcon}>🍽️</span>
+            Add Food
+          </LoadingButton>
+        </div>
 
-      {/* Meal Entries */}
-      <div key={`meals-${refreshKey}`}>
-        <MealsCatalog />
+        {/* Meals Catalog */}
+        <div style={styles.mealsSection}>
+          <MealsCatalog />
+        </div>
       </div>
-    </div>
+    </TexturedLayout>
   )
 }
 
 const styles = {
   container: {
-    padding: "1.5rem",
-    color: "var(--color-white)",
-    fontFamily: "var(--font-sans)",
-    maxWidth: "800px",
-    margin: "0 auto",
+    color: "var(--color-white, #ffffff)",
+    fontFamily: "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)",
   },
   header: {
     display: "flex",
@@ -404,19 +103,24 @@ const styles = {
     marginBottom: "2rem",
     flexWrap: "wrap",
     gap: "1rem",
+    padding: "0 0.5rem",
   },
   welcomeSection: {
     flex: 1,
   },
   heading: {
     margin: "0 0 0.5rem 0",
-    fontSize: "1.75rem",
+    fontSize: "2rem",
     fontWeight: "700",
+    background: "linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
   },
   subtitle: {
     margin: 0,
-    fontSize: "1rem",
-    color: "var(--color-gray-400)",
+    fontSize: "1.1rem",
+    color: "rgba(255, 255, 255, 0.7)",
   },
   headerActions: {
     display: "flex",
@@ -424,31 +128,63 @@ const styles = {
     alignItems: "center",
   },
   profileButton: {
-    padding: "0.5rem 1rem",
-    borderRadius: "6px",
-    border: "1px solid var(--color-gray-600)",
-    backgroundColor: "var(--color-gray-700)",
-    color: "var(--color-white)",
+    padding: "0.75rem 1.25rem",
+    borderRadius: "12px",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    color: "#ffffff",
     cursor: "pointer",
-    fontSize: "0.875rem",
+    fontSize: "0.9rem",
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
+    transition: "all 0.3s ease",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+  },
+  profileFormContainer: {
+    marginBottom: "2rem",
+    animation: "slideDown 0.3s ease-out",
+  },
+  contentGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    gap: "1.5rem",
+    marginBottom: "2rem",
+  },
+  calendarSection: {
+    gridColumn: "1 / -1",
+  },
+  counterSection: {
+    gridColumn: "1 / -1",
   },
   addFoodSection: {
     display: "flex",
     justifyContent: "center",
     marginBottom: "2rem",
+    padding: "1rem 0",
   },
   addFoodButton: {
-    padding: "1rem 2rem",
-    fontSize: "1.125rem",
+    padding: "1.25rem 2.5rem",
+    fontSize: "1.2rem",
     fontWeight: "600",
-    borderRadius: "12px",
-    backgroundColor: "var(--color-primary-orange)",
-    minWidth: "200px",
+    borderRadius: "16px",
+    background: "linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)",
+    border: "none",
+    color: "#ffffff",
+    minWidth: "220px",
+    boxShadow: `
+      0 8px 24px rgba(255, 107, 53, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.2)
+    `,
+    transition: "all 0.3s ease",
+    cursor: "pointer",
   },
   addIcon: {
-    fontSize: "1.25rem",
+    fontSize: "1.4rem",
+    marginRight: "0.5rem",
+  },
+  mealsSection: {
+    marginTop: "1rem",
   },
 }
