@@ -1,0 +1,22 @@
+/* src/components/ChatMessage.css */
+.chat-message {
+    max-width: 70%;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    word-break: break-word;
+    font-family: var(--font-sans);
+  }
+  
+  .chat-message.user {
+    align-self: flex-end;
+    background-color: var(--color-primary-orange);
+    color: var(--color-white);
+  }
+  
+  .chat-message.bot {
+    align-self: flex-start;
+    background-color: var(--color-gray-700);
+    color: var(--color-white);
+  }
+  

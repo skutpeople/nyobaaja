@@ -1,0 +1,23 @@
+/* src/components/Navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    background-color: var(--color-card-bg);
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-gray-400);
+    text-decoration: none;
+    font-family: var(--font-sans);
+  }
+  .nav-link.active {
+    color: var(--color-white);
+  }
+  .nav-link .material-icons {
+    font-size: 1.25rem;
+  }
+  
