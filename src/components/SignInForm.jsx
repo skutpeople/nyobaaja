@@ -33,14 +33,14 @@ export default function SignInForm({ onSuccess, onToggleForm }) {
       <form onSubmit={handleSubmit} style={formStyles.form}>
         <div style={formStyles.inputGroup}>
           <label htmlFor="emailOrUsername" style={formStyles.label}>
-            Email
+            Email or username
           </label>
           <div style={formStyles.inputWrapper}>
             <span style={formStyles.icon}>✉️</span>
             <input
               id="emailOrUsername"
               type="text"
-              placeholder="nama@email.com"
+              placeholder="nama@email.com atau username"
               value={emailOrUsername}
               onChange={(e) => setEmailOrUsername(e.target.value)}
               style={formStyles.input}
